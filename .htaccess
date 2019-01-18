@@ -1,0 +1,6 @@
+RewriteEngine On
+
+#Redirect every request to front controller index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^(.*)$ /index.php [QSA,L] 

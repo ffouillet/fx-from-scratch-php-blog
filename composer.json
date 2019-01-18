@@ -1,0 +1,14 @@
+{
+    "name" : "fx/fromScratchBlog",
+    "require" : {
+        "ext-dom" : "*",
+        "ext-pdo" : "*",
+        "twig/twig": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OCFram\\": "ocfram/",
+            "App\\" : "src/"
+        }
+    }	
+}

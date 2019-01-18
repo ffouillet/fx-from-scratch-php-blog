@@ -1,0 +1,8 @@
+#Phpstorm
+.idea/*
+
+#Vendors
+vendor/*
+
+#Config File, find a solution to commit a 'clone' later
+config/config.xml

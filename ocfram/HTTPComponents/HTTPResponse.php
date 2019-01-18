@@ -11,7 +11,7 @@ class HTTPResponse
     public function __construct($content = '', $httpStatusCode = 200)
     {
         $this->content = $content;
-        $this->httpStatusCode = $httpStatusCode;
+        $this->httpStatusCode = (int) $httpStatusCode;
     }
 
     public function addHeader($header)
@@ -20,7 +20,7 @@ class HTTPResponse
             throw new \InvalidArgumentException('Header must be a valid string');
         }
 
-        $this->headers[$header];
+        $this->headers[] = $header;
     }
 
 
@@ -30,17 +30,13 @@ class HTTPResponse
         exit;
     }
 
-
-    public function redirect404()
-    {
-        $this->addHeader('HTTP/1.0 404 Not Found');
-        $this->send();
-    }
-
     public function send()
     {
 
+        $this->handleHttpStatusCode();
+
         foreach ($this->headers as $header) {
+
             header($header);
         }
 
@@ -68,6 +64,17 @@ class HTTPResponse
 
         if ($httpStatusCode == false) {
             throw new \InvalidArgumentException('HTTPResponse\'s status code must be a valid integer');
+        }
+    }
+
+    public function handleHttpStatusCode() {
+
+        switch ($this->httpStatusCode) {
+            case 404 :
+                $this->addHeader('HTTP/1.0 404 Not Found');
+                break;
+            default :
+                break;
         }
     }
 

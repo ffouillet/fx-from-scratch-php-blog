@@ -55,12 +55,14 @@ class Application
         }
 
         // Add URL variables to $_GET array
-        $_GET = array_merge($_GET, $matchedRoute->vars());
+        if ($matchedRoute->getVars() !== null) {
+            $_GET = array_merge($_GET, $matchedRoute->getVars());
+        }
 
         // Instanciate Controller.
         $controllerClass = 'App\\Controller\\'.$matchedRoute->getController().'Controller';
 
-        return new $controllerClass($this, $matchedRoute->action());
+        return new $controllerClass($this, $matchedRoute->getAction());
     }
 
     public function run(){
@@ -74,7 +76,6 @@ class Application
         }
 
         // Auth Part or Firewall
-
         $this->httpResponse->send();
 
     }

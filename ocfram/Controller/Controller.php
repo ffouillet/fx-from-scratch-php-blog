@@ -30,11 +30,14 @@ class Controller extends ApplicationComponent {
                 self::CONTROLLER_METHOD_DOES_NOT_EXISTS);
         }
 
-        $this->method($this->getApp()->getHTTPRequest());
+        return $this->$method($this->getApp()->getHTTPRequest());
     }
 
-    public function render($viewFile, array $viewVariables) {
-        if (!file_exists($viewFile) || !is_file($viewFile)) {
+    public function render($viewFile, array $viewVariables = []) {
+
+        $viewFilePath = APPLICATION_VIEW_FILES_PATH . $viewFile;
+
+        if (!file_exists($viewFilePath) || !is_file($viewFilePath)) {
             throw new \InvalidArgumentException('The viewFile you specified doesn\'t exists in Application View File Path', self::VIEW_NOT_FOUND);
         }
 

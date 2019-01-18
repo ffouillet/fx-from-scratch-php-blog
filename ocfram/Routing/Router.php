@@ -14,6 +14,17 @@ class Router {
         }
     }
 
+    public function setRoutes(array $routes) {
+
+        foreach ($routes as $route) {
+            if (!$route instanceof Route) {
+                throw new \RuntimeException("Router setRoutes method only accept an array of Route as argument.");
+            }
+        }
+
+        $this->routes = $routes;
+    }
+
     public function getRoute($url) {
 
         foreach ($this->routes as $route) {

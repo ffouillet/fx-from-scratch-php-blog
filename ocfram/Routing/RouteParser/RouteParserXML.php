@@ -2,13 +2,13 @@
 
 namespace OCFram\Routing\RouteParser;
 
-use OCFram\Route;
+use OCFram\Routing\Route;
 
 class RouteParserXML extends RouteParser {
 
     const ROUTE_FILE_NOT_IN_XML_FORMAT = 1;
 
-    protected function getRoutesFromRouteFile() {
+    public function getRoutesFromRouteFile() {
 
         if (preg_match("#\.xml$#", $this->routesFilePath) == 0) {
             throw new \RuntimeException("Routes file is not in XML format as required", self::ROUTE_FILE_NOT_IN_XML_FORMAT);

@@ -20,9 +20,6 @@ class PDOMysqlDriver extends DBDriver
             throw new \PDOException("Connection to database failed : ".$e->getMessage(), $e->getCode());
         }
 
-
-
     }
-
-
+    
 }

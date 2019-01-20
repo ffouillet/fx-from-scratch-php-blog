@@ -19,7 +19,7 @@ class DatabaseAccessObject {
         $this->dbConnection = $this->dbDriver->connect();
     }
 
-    public function getDbConnection() {
+    public function getDb() {
 
         if ($this->dbConnection == null) {
             $this->initDbConnection();
@@ -28,8 +28,13 @@ class DatabaseAccessObject {
         return $this->dbConnection;
     }
 
-    public function setDbDriver(DBDriver $dbDriver){
-
+    public function setDbDriver(DBDriver $dbDriver)
+    {
         $this->dbDriver = $dbDriver;
+    }
+
+    public function getDbDriver()
+    {
+        return $this->dbDriver;
     }
 }

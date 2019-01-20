@@ -89,4 +89,11 @@ abstract class DBDriver {
         return $this->dbConnectionOptions;
     }
 
+    public function getDriverName()
+    {
+        // Return class name
+        $path = explode('\\', get_class($this));
+        return str_replace('Driver','',array_pop($path));
+    }
+
 }

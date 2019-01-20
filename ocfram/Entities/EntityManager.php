@@ -7,29 +7,34 @@ use OCFram\Database\DBAL\DatabaseAccessObject;
 class EntityManager {
 
     protected $databaseAccessObject;
-    protected $managedModels = [];
+    protected $managedEntities = [];
 
-    const INVALID_MODEL_NAME = 1;
+    const INVALID_ENTITY_NAME = 1;
 
     public function __construct(DatabaseAccessObject $databaseAccessObject)
     {
         $this->databaseAccessObject = $databaseAccessObject;
     }
 
-    public function getModel($model) {
-        if (!is_string($model) || empty($model)) {
-            throw new \InvalidArgumentException("Model must be a valid string (not empty)", self::INVALID_MODEL_NAME);
+    public function getRepository($entityName, $tableName = null)
+    {
+        if (!is_string($entityName) || empty($entityName)) {
+            throw new \InvalidArgumentException("entityName must be a valid string (not empty)", self::INVALID_MODEL_NAME);
         }
 
-        if (!isset($this->$managedModels[$model])) {
+        if (!isset($this->managedEntities[$entityName])) {
 
-            $modelManagerClass = 'App\\Model\\'.ucfirst($model).'Manager'.ucfirst($this->api);
+            $repositoryClass = 'App\\Repository\\'.ucfirst($entityName).'Manager';
+            $repositoryClass .= ucfirst($this->getDatabaseAccessObject()->getDbDriver()->getDriverName());
 
-            $this->managedModels[$model] = new $modelManagerClass($this->dao);
+            $this->managedEntities[$entityName] = new $repositoryClass($this, $entityName, $tableName);
         }
+
+        return $this->managedEntities[$entityName];
     }
 
-    public function getDb() {
+    public function getDatabaseAccessObject()
+    {
         return $this->databaseAccessObject;
     }
 

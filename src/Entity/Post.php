@@ -23,9 +23,9 @@ class Post extends BaseEntity
         return !(empty($this->author) || empty($this->title) || empty($this->content));
     }
 
-    public function setAuthor(BaseUser $author)
+    public function setAuthor($author)
     {
-        $this->$author = $author;
+        $this->author = $author;
     }
 
     public function setHeading($heading)
@@ -78,6 +78,11 @@ class Post extends BaseEntity
     public function getTitle()
     {
         return $this->title;
+    }
+
+    public function getHeading()
+    {
+        return $this->heading;
     }
 
     public function getContent()

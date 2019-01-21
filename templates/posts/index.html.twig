@@ -1,0 +1,31 @@
+{% extends 'layouts/front.html.twig' %}
+
+{% block content %}
+    {% if posts is not empty %}
+        {% for post in posts %}
+            <div class="post-preview">
+                <a href="/post/{{ post.id }}">
+                    <h2 class="post-title">
+                        {{ post.title }}
+                    </h2>
+                    <h3 class="post-subtitle">
+                        {{ post.heading }}
+                    </h3>
+                </a>
+                <p class="post-meta">
+                    XX commentaires, crée par
+                    <a href="#">{{ post.author }}</a>
+                    le {{ post.createdAt|date('d/m/y') }}
+                </p>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>Oops ! Encore aucune article n'a été redigé :-(</p>
+    {% endif %}
+
+    <!-- Pager -->
+    <div class="clearfix">
+        <a class="btn btn-primary float-right" href="#">D'autres articles &rarr;</a>
+    </div>
+{% endblock %}

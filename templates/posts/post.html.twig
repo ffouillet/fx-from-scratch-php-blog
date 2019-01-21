@@ -1,0 +1,61 @@
+{% extends 'layouts/front.html.twig' %}
+
+{% block title %}
+    {{ post.title }}{{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    {% block navbar %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% block header %}
+        <!-- Page Header -->
+        <header class="masthead" style="background-image: url('/assets/img/post-bg.jpg')">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="post-heading">
+                            <h1>{{ post.title }}</h1>
+                            <h2 class="subheading">{{ post.heading }}</h2>
+                            <span class="meta">Posté par
+                                <a href="#">{{ post.author }}</a>
+                                le {{ post.createdAt|date('d/m/y') }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Post Content -->
+        <article>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div>
+                            {{ post.content }}
+                        </div>
+                        <div class="comments">
+                            <h3><i class="fas fa-comment"></i>Commentaires</h3>
+                            <p>Il n'y a aucun commentaires sur cet article actuellement.</p>
+                            <h4><i class="fas fa-plus-circle"></i> Ajouter un commentaire</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <hr>
+    {% endblock %}
+
+
+
+    {% block footer %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}

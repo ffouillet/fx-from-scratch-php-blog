@@ -25,7 +25,7 @@ class Route {
 
     public function match($url) {
 
-        if (preg_match('#^'.$url.'$#', $this->url, $matches)) {
+        if (preg_match('#^'.$this->url.'$#', $url, $matches)) {
             return $matches;
         }
 

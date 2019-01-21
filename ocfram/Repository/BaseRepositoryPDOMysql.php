@@ -2,6 +2,8 @@
 
 namespace OCFram\Repository;
 
+use OCFram\Entities\Utils\ArrayToEntityConverter;
+
 class BaseRepositoryPDOMysql extends BaseRepository {
 
     public function findOneById($id)
@@ -14,23 +16,23 @@ class BaseRepositoryPDOMysql extends BaseRepository {
         $sqlQuery.= "WHERE ";
         $sqlQuery.= "id = ".$id;
 
-        $results = $this->getDb()->query($sqlQuery)->fetchAll(\PDO::FETCH_ASSOC);
+        /*
+         * Should have used PDO::FETCH_CLASS mode but
+         * i don't like the fact that it gives an object (instead of array)
+         * to the class constructor
+         */
+        $result = $this->getDb()->query($sqlQuery)->fetchAll(\PDO::FETCH_ASSOC);
 
-        if ($results) {
+        if ($result) {
 
-            $hydratedEntities = [];
+            $hydratedEntity = ArrayToEntityConverter::convert($result, $this->getEntityName());
+            $hydratedEntity = $hydratedEntity[0];
 
-            $entityName = ucfirst($this->getEntityName());
-            $entityNamespace = "App\\Entity\\" . $entityName;
-
-            foreach($results as $result) {
-
-                $entity = new $entityNamespace($result);
-
-            }
+            return $hydratedEntity;
         }
 
-        return $result;
+        return false;
+
     }
 
     public function findOneByCriteria(array $criteria)
@@ -45,7 +47,16 @@ class BaseRepositoryPDOMysql extends BaseRepository {
 
     public function findAll()
     {
+        $sqlQuery = "SELECT * FROM ".$this->getTableName();
 
+        $results = $this->getDb()->query($sqlQuery)->fetchAll(\PDO::FETCH_ASSOC);
+
+        if ($results) {
+
+            $hydratedEntities = ArrayToEntityConverter::convert($results, $this->getEntityName());
+        }
+
+        return $hydratedEntities;
     }
 
 }

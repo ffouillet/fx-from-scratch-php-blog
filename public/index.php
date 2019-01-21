@@ -26,6 +26,7 @@ $httpResponse = new HTTPResponse();
 $routeParser = new RouteParserXML($applicationConfig->getConfigVariable('routesFilePath'));
 $router = new Router();
 $router->setRoutes($routeParser->getRoutesFromRouteFile());
+
 $user = new BaseUser();
 
 // Template engine (Twig here)

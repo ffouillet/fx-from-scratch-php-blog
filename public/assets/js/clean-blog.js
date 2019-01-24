@@ -38,4 +38,10 @@
       });
   }
 
+  $('.close-flashMessage').click(function(e){
+    $('.flash').delay(100).hide();
+  });
+
+  $('.flash').delay(5000).fadeOut();
+
 })(jQuery); // End of use strict

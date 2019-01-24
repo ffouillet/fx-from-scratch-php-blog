@@ -1,6 +1,11 @@
 {% extends 'layouts/front.html.twig' %}
 
 {% block content %}
+    {% if user.isAdmin %}
+        <a id="add-article" class="article-management" href="/admin/post/add">
+            <i class="fas fa-plus-square"></i>Ajouter un article
+        </a>
+    {% endif %}
     {% if posts is not empty %}
         {% for post in posts %}
             <div class="post-preview">
@@ -12,20 +17,35 @@
                         {{ post.heading }}
                     </h3>
                 </a>
+                {% if user.isAdmin %}
+                    <div class>
+                        <a id="edit-article" class="article-management" href="/admin/post/edit/{{ post.id }}">
+                            <i class="fas fa-edit"></i>Modifier cet article
+                        </a>
+                        <a id="delete-article" class="article-management" href="/admin/post/delete/{{ post.id }}">
+                            <i class="fas fa-trash"></i>Supprimer cet article
+                        </a>
+                    </div>
+                {% endif %}
+                <p class="post-content-preview">
+                    {{ post.content }}
+                </p>
                 <p class="post-meta">
-                    XX commentaires, crée par
-                    <a href="#">{{ post.author }}</a>
+                    Ajouté
+                    {{ post.author }}
                     le {{ post.createdAt|date('d/m/y') }}
                 </p>
             </div>
             <hr>
         {% endfor %}
     {% else %}
-        <p>Oops ! Encore aucune article n'a été redigé :-(</p>
+        <p>Oops ! Encore aucun article n'a été redigé :-(</p>
     {% endif %}
 
     <!-- Pager -->
+    {% if pagination.offset < pagination.nbrResults and pagination.nbrResults > (pagination.maxResultsPerPage + pagination.offset) %}
     <div class="clearfix">
-        <a class="btn btn-primary float-right" href="#">D'autres articles &rarr;</a>
+        <a class="btn btn-primary float-right" href="/?offset={{ pagination.offset + pagination.maxResultsPerPage }}">D'autres articles &rarr;</a>
     </div>
+    {% endif %}
 {% endblock %}

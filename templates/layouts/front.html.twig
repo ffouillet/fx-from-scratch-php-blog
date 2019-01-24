@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+
     <!-- Navigation -->
     {% block navbar %}
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -16,19 +17,55 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">Qui suis-je ?</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="post.html">Post d'exemple</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
+                        {% if user.isAuthenticated %}
+
+                            {% if user.isAdmin %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/comments/validation">
+                                        <i class="fas fa-check"></i>Valider les commentaires
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">
+                                    <i class="fas fa-power-off"></i>Déconnexion
+                                </a>
+                            </li>
+
+                        {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/register">Inscription</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login">Connexion</a>
+                                </li>
+                        {% endif %}
+
                     </ul>
                 </div>
             </div>
         </nav>
+    {% endblock %}
+
+    {% block flash %}
+        {% if flashMessage is not empty %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        {% if flashMessage.type == 'success' %}
+                            <div class="flash flash-success">
+                        {% elseif flashMessage.type == 'error' %}
+                            <div class="flash flash-error">
+                        {% endif %}
+                        {{ flashMessage.message }}
+                        <a href="#" class="close-flashMessage"><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     {% endblock %}
 
     <!-- Page Header -->
@@ -39,8 +76,9 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-10 mx-auto">
                         <div class="site-heading">
-                            <h1>Fx Blog</h1>
-                            <span class="subheading">Code & Games</span>
+                            <h1>{% block headerTitle %}Fx Blog{% endblock %}</h1>
+                            <span class="subheading">{% block headerSubtitle %}Code & Games{% endblock %}</span>
+                            {% block headerParagpraph %}{% endblock %}
                         </div>
                     </div>
                 </div>

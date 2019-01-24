@@ -3,6 +3,7 @@
 // Composer autoloader
 require __DIR__.'/../vendor/autoload.php';
 
+use App\Entity\User;
 use OCFram\Application;
 use OCFram\Config\ApplicationConfig;
 use OCFram\Database\DBAL\DatabaseAccessObject;
@@ -12,6 +13,8 @@ use OCFram\HTTPComponents\HTTPRequest;
 use OCFram\HTTPComponents\HTTPResponse;
 use OCFram\Routing\RouteParser\RouteParserXML;
 use OCFram\Routing\Router;
+use OCFram\Security\AccessControl;
+use OCFram\Security\AccessControlParser;
 use OCFram\User\BaseUser;
 
 // Constants
@@ -27,7 +30,9 @@ $routeParser = new RouteParserXML($applicationConfig->getConfigVariable('routesF
 $router = new Router();
 $router->setRoutes($routeParser->getRoutesFromRouteFile());
 
-$user = new BaseUser();
+// Access Control and Secured Routes / Areas
+$accessControlParser = new AccessControlParser($applicationConfig->getConfigVariable('accessControlFilePath'));
+$accessControl = new AccessControl($accessControlParser->getSecuredRoutesAndAreasFromAccessControlFile());
 
 // Template engine (Twig here)
 // Possible Optimization : Use Twig Template Caching
@@ -48,11 +53,24 @@ $databaseAccessObject->initDbConnection();
 
 $entityManager = new EntityManager($databaseAccessObject);
 
+// Check if user has already logged in.
+$user = new User();
+
+if ($userId = $user->isAuthenticated()) {
+    $user = $entityManager->getRepository('User')->findOneById($userId);
+}
+
 // Initialize application
-$application = new Application($applicationConfig, $router, $httpRequest, $httpResponse, $entityManager, $templateEngine, $user);
+$application = new Application(
+    $applicationConfig,
+    $router,
+    $accessControl,
+    $httpRequest,
+    $httpResponse,
+    $entityManager,
+    $templateEngine,
+    $user);
 $application->run();
 
 // Initialize application components (components that must be aware of the application)
-
-echo 'it works';
 

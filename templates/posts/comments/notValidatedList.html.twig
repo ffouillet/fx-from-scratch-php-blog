@@ -1,0 +1,33 @@
+{% extends 'layouts/front.html.twig' %}
+
+{% block title %}
+    Validation des commentaires {{ parent() }}
+{% endblock %}
+
+{% block header %}
+    <!-- Page Header -->
+    <header class="masthead">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>Valider les commentaires en attente</h1>
+                        {% if comments is not empty %}
+                            <ul id="not-validated-comments-list">
+                            {% for comment in comments %}
+                                <li><p class="comment-added-on">Commentaire ajouté le : {{ comment.createdAt|date('Y-m-d') }}</p>
+                                    <p class="comment-content">Contenu : {{ comment.content }}</p>
+                                    <div><a id="validate-comment" class="comment-management" href="/admin/comments/validate/{{ comment.id }}">Valider le commentaire</a></div>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Aucun commentaires en attente de validation</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}

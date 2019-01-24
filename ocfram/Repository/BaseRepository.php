@@ -27,9 +27,9 @@ abstract class BaseRepository implements BaseRepositoryInterface {
 
     abstract public function findOneById($id);
 
-    abstract public function findOneByCriteria(array $criteria);
+    abstract public function findOneByCriteria(array $criterias);
 
-    abstract public function findBy(array $criteria, $orderBy = null, $limit = null, $offset = null);
+    abstract public function findBy(array $criterias, $orderBy = null, $limit = null, $offset = null);
 
     abstract public function findAll();
 

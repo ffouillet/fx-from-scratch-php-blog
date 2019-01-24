@@ -4,58 +4,70 @@
     {{ post.title }}{{ parent() }}
 {% endblock %}
 
-{% block body %}
-
-    {% block navbar %}
-        {{ parent() }}
-    {% endblock %}
-
-    {% block header %}
-        <!-- Page Header -->
-        <header class="masthead" style="background-image: url('/assets/img/post-bg.jpg')">
-            <div class="overlay"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-md-10 mx-auto">
-                        <div class="post-heading">
-                            <h1>{{ post.title }}</h1>
-                            <h2 class="subheading">{{ post.heading }}</h2>
-                            <span class="meta">Posté par
+{% block header %}
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('/assets/img/post-bg.jpg')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>{{ post.title }}</h1>
+                        <h2 class="subheading">{{ post.heading }}</h2>
+                        <span class="meta">Posté par
                                 <a href="#">{{ post.author }}</a>
                                 le {{ post.createdAt|date('d/m/y') }}
-                            </span>
-                        </div>
+                        </span>
                     </div>
                 </div>
             </div>
-        </header>
-    {% endblock %}
+        </div>
+    </header>
+{% endblock %}
 
-    {% block content %}
-        <!-- Post Content -->
-        <article>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-md-10 mx-auto">
-                        <div>
-                            {{ post.content }}
-                        </div>
-                        <div class="comments">
-                            <h3><i class="fas fa-comment"></i>Commentaires</h3>
-                            <p>Il n'y a aucun commentaires sur cet article actuellement.</p>
-                            <h4><i class="fas fa-plus-circle"></i> Ajouter un commentaire</h4>
-                        </div>
+{% block content %}
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="mx-auto">
+                    <div>
+                        {{ post.content }}
+                    </div>
+                    <div class="comments">
+                        <h3><i class="fas fa-comment"></i>Commentaires</h3>
+                        {% if post.comments is not empty %}
+                            <ul id="comments-list">
+                                {% for comment in post.comments %}
+                                    <li>
+                                        <span>
+                                            <i>Le {{ comment.createdAt|date('d/m/Y') }} par {{ comment.author }}</i>
+                                        </span>
+                                        <p>{{ comment.content }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                        {% else %}
+                            <p>Personne n'a commenté cet article pour l'instant.</p>
+                        {% endif %}
+
+
+                        <h4><i class="fas fa-plus-circle"></i>Ajouter un commentaire</h4>
+                        {% if user.isAuthenticated %}
+                            <form action="" method="post">
+                                {{ commentForm | raw }}
+                                <input type="submit" value="Ajouter" />
+                            </form>
+                        {% else %}
+                            <p>
+                                Merci de vous <a href="/login">connecter</a> ou vous <a href="/register">inscrire</a> pour pouvoir ajouter un commentaire.
+                            </p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        </article>
-
-        <hr>
-    {% endblock %}
-
-
-
-    {% block footer %}
-        {{ parent() }}
-    {% endblock %}
+        </div>
+    </article>
+    <hr>
 {% endblock %}

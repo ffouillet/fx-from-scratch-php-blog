@@ -24,7 +24,7 @@ class EntityManager {
 
         if (!isset($this->managedEntities[$entityName])) {
 
-            $repositoryClass = 'App\\Repository\\'.ucfirst($entityName).'Manager';
+            $repositoryClass = 'App\\Repository\\'.ucfirst($entityName).'Repository';
             $repositoryClass .= ucfirst($this->getDatabaseAccessObject()->getDbDriver()->getDriverName());
 
             $this->managedEntities[$entityName] = new $repositoryClass($this, $entityName, $tableName);

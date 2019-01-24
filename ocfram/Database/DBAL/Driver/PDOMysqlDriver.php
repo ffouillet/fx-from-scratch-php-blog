@@ -10,6 +10,7 @@ class PDOMysqlDriver extends DBDriver
 
         $dsn  = 'mysql:dbname='.$this->getDbName().';';
         $dsn .= 'host='.$this->getDbHost();
+        $dsn .= ';charset=utf8';
 
         try  {
             $db = new \PDO($dsn, $this->getDbUser(), $this->getDbPassword());

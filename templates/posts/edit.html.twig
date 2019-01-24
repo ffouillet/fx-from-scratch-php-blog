@@ -1,0 +1,26 @@
+{% extends 'layouts/front.html.twig' %}
+
+{% block title %}
+    Modifier un article {{ parent() }}
+{% endblock %}
+
+{% block header %}
+    <!-- Page Header -->
+    <header class="masthead">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>Modifier un article</h1>
+                        <h2>Article : {{ post.title }}</h2>
+                        <form id="post-form" action="" method="post">
+                            {{ postForm | raw }}
+                            <input type="submit" value="Modifier l'article"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}

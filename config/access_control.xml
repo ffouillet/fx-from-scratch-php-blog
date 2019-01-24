@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<securedAreasAndRoutes>
+    <securedArea urlPrefix="/admin" requiredRoles="ADMIN"/>
+    <securedRoute name="logout" requiredRoles="BASE_USER"/>
+    <securedRoute name="login" requiredRoles="ANONYMOUS_USER"/>
+</securedAreasAndRoutes>

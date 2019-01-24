@@ -423,6 +423,117 @@ footer .copyright {
   margin-top: 20px;
 }
 
-.comments .fa-comment {
+.fas {
   margin-right: 5px;
+}
+
+form label {
+  width: 100%;
+}
+
+form input[type="submit"] {
+  margin-top : 15px;
+}
+
+.form-group-content textarea {
+  margin-bottom: 10px;
+}
+
+.comments h3,
+.comments h4 {
+  margin-bottom: 20px;
+}
+
+#comments-list p {
+    margin-top: 5px;
+    padding-left : 10px;
+}
+
+#comments-list span {
+
+}
+
+p.form-error {
+    margin-top : 5px;
+    margin-bottom: 5px;
+    padding : 10px;
+    background-color : #ff4f54;
+    border-radius: 2px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea {
+    width : 100%;
+    margin-bottom: 15px;
+}
+
+.flash {
+    padding : 10px 20px;
+    margin: 10px;
+    width : 100%;
+    border-radius: 5px;
+    color : white;
+    position: absolute;
+    z-index: 10000;
+    display: flex;
+    justify-content: space-between;
+}
+
+.flash a.close-flashMessage {
+    margin-left: 40px;
+    color : white;
+}
+
+.flash-success {
+    background-color: #1e7e34;
+}
+
+.flash-error {
+    background-color: #ff4f54;
+}
+
+a.article-management,
+a.comment-management{
+  color : white;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-weight: bold;
+  font-size: 14px;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+}
+
+a#add-article,
+a#validate-comment{
+  background-color: #3a7e48;
+}
+
+a#edit-article {
+  margin-top: 10px;
+  background-color: #0085A1;
+}
+
+a#delete-article {
+  margin-top: 10px;
+  margin-left: 10px;
+  background-color: #ff4f54;
+}
+
+a#edit-article:hover {
+  color : white;
+  text-decoration: underline;
+}
+
+.comment-added-on {
+  margin : 5px 0px;
+}
+
+.comment-content {
+  margin : 5px 10px 10px 0px;
+}
+
+#not-validated-comments-list li{
+  margin-bottom: 40px;
 }

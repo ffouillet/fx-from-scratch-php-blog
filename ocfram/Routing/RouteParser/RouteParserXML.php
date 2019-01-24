@@ -32,7 +32,10 @@ class RouteParserXML extends RouteParser {
                 $vars = explode(',', $route->getAttribute('vars'));
             }
 
-            $routes[] = new Route($route->getAttribute('url'), $route->getAttribute('controller'), $route->getAttribute('action'), $vars);
+            $routes[] = new Route($route->getAttribute('name'),
+                $route->getAttribute('url'),
+                $route->getAttribute('controller'),
+                $route->getAttribute('action'), $vars);
 
         }
 

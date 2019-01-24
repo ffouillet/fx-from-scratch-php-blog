@@ -1,0 +1,25 @@
+{% extends 'layouts/front.html.twig' %}
+
+{% block title %}
+    Créer un article {{ parent() }}
+{% endblock %}
+
+{% block header %}
+    <!-- Page Header -->
+    <header class="masthead">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>Créer un article</h1>
+                        <form id="post-form" action="" method="post">
+                            {{ postForm | raw }}
+                            <input type="submit" value="Créer l'article"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}

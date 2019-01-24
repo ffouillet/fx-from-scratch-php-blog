@@ -59,4 +59,58 @@ class BaseRepositoryPDOMysql extends BaseRepository {
         return $hydratedEntities;
     }
 
+    public function countAll()
+    {
+        $sqlQuery = "SELECT COUNT(*) FROM ".$this->getTableName();
+
+        $nbrEntities = $this->getDb()->query($sqlQuery)->fetch(\PDO::FETCH_UNIQUE);
+
+        if ($nbrEntities) {
+            return $nbrEntities[0];
+        }
+
+        return false;
+    }
+
+    public function findOneByAttribute($attribute, $attributeValue) {
+
+        if (!is_string($attribute) || empty($attribute)) {
+            throw new\InvalidArgumentException('attribute parameter must be a valid string');
+        }
+
+        $entityClass = "App\\Entity\\" . ucfirst($this->getEntityName());
+
+        if (!property_exists($entityClass, $attribute)) {
+            throw new \InvalidArgumentException("Class User doesn't have attribute '".$attribute.'"');
+        }
+
+        $sqlQuery = "SELECT * FROM user WHERE ".$attribute." = :".$attribute;
+
+        $stmt = $this->getDb()->prepare($sqlQuery);
+
+        $pdoDataType = \PDO::PARAM_STR;
+
+        switch (gettype($attribute)) {
+            case 'integer' :
+                $pdoDataType = \PDO::PARAM_INT;
+                break;
+            case 'object' :
+                if ($attribute instanceof \DateTime) {
+                    $attribute = $attribute->format('Y-m-d H:i:s');
+                }
+                break;
+            default :
+                break;
+        }
+
+        $stmt->bindParam($attribute, $attributeValue, $pdoDataType);
+
+        $stmt->execute();
+
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        $stmt->closeCursor();
+
+        return $result;
+    }
 }

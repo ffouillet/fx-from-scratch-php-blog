@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <routes>
-	<route url="/" controller="Post" action="index"></route>
-	<route url="/post/([0-9]+)" controller="Post" action="show" vars="id" />
-</routes> 
+	<route name="index" url="/(\?offset=[0-9]+)*" controller="Post" action="index"/>
+	<route name="show_post" url="/post/([0-9]+)" controller="Post" action="show" vars="post_id" />
+	<route name="register" url="/register" controller="Security" action="register"/>
+	<route name="login" url="/login" controller="Security" action="login"/>
+	<route name="logout" url="/logout" controller="Security" action="logout"/>
+
+    <!--ADMIN ROUTES-->
+    <route name="add_post" url="/admin/post/add" controller="Post" action="add"/>
+    <route name="edit_post" url="/admin/post/edit/([0-9]+)" controller="Post" action="edit" vars="post_id" />
+	<route name="delete_post" url="/admin/post/delete/([0-9]+)" controller="Post" action="delete" vars="post_id" />
+    <route name="validate_comments_list" url="/admin/comments/validation" controller="Comment" action="showNotValidatedCommentList"/>
+	<route name="validate_comment" url="/admin/comments/validate/([0-9]+)" controller="Comment" action="validateComment" vars="comment_id"/>
+</routes>

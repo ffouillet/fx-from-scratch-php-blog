@@ -7,23 +7,32 @@ use OCFram\User\BaseUser;
 class Post extends BaseEntity
 {
     protected $author,
+        $authorId,
         $heading,
         $title,
         $content,
         $createdAt,
-        $updatedAt;
+        $updatedAt,
+        $comments;
 
     const INVALID_AUTHOR = 1;
     const INVALID_HEADING = 2;
     const INVALID_TITLE = 3;
     const INVALID_CONTENT = 4;
 
-    public function isValid()
+    public function __construct(array $datas = [])
     {
-        return !(empty($this->author) || empty($this->title) || empty($this->content));
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+        parent::__construct($datas);
     }
 
-    public function setAuthor($author)
+    public function setAuthor(BaseUser $author)
+    {
+        $this->author = $author;
+    }
+
+    public function setAuthorId($author)
     {
         $this->author = $author;
     }
@@ -68,11 +77,21 @@ class Post extends BaseEntity
         $this->updatedAt = $updatedAt;
     }
 
+    public function setComments(array $comments)
+    {
+        $this->comments = $comments;
+    }
+
     // GETTERS //
 
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    public function getAuthorId()
+    {
+        return $this->authorId;
     }
 
     public function getTitle()
@@ -99,4 +118,10 @@ class Post extends BaseEntity
     {
         return $this->updatedAt;
     }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
 }
